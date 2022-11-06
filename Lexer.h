@@ -49,11 +49,12 @@ struct Token {
 class Lexer {
 public:
     Lexer (std::string filePath);
+    Token next();
 private:
     std::vector<std::string> vectorize(std::string data);
     void tokenize(std::vector<std::string> data);
     std::vector<Token> tokens;
-
+    unsigned long tokenCounter = 0;
     const std::vector<TokenMatch> tokenMatch{
         {";",SEMICOLON},
         {"^\\d+$",INTEGER},
