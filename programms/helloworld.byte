@@ -1,0 +1,25 @@
+push 10
+push 68
+push 76
+push 82
+push 79
+push 87
+push 79
+push 76
+push 76
+push 69
+push 72
+push 11
+create 1
+ass 1
+flag 1
+pop
+load 1
+push 1
+sub
+ass 1
+pop
+postc
+pop
+load 1
+jnef 1 0

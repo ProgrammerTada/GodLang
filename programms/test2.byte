@@ -1,0 +1,12 @@
+push 10
+create 1
+ass 1
+load 1
+jne 3 0
+push 20
+add
+ass 1
+push 1
+sub
+ass 1
+jne -9 19

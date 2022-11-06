@@ -1,0 +1,8 @@
+int x = 10;
+double asdf = 2.201;
+while(x > 0) {
+    x = x - 1;
+}
+for(int i = 1; i > 0; i++){
+    x = x + i;
+}

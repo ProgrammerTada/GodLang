@@ -1,0 +1,14 @@
+push 23
+create 1
+ass 1
+push 10
+add
+create 2
+ass 2
+flag 1
+load 2
+push 1
+sub
+ass 2
+post
+jgf 1 0
