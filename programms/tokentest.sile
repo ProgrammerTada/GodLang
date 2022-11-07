@@ -1,12 +1,13 @@
 int x = 10;
 double asdf = 2.201;
-func (){
-    while(x > 0) {
+test_func (){
+    while (x > 0) {
         x = x - 1;
     };
-    for(int i = 1; i > 0; i = i + 1){
+    for (int i = 1; i > 0; i = i + 1){
         x = x + i;
     };
 };
+test_func();
 string test = "asdfji ievn asdie";
 string test2 = "asdf";

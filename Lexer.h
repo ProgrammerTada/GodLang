@@ -32,7 +32,6 @@ enum TokenType {
     RBRACE,
     LCURL,
     RCURL,
-    FUNC,
     RETURN
 };
 
@@ -98,7 +97,6 @@ private:
         {"\\)",RBRACE},
         {"\\{",LCURL},
         {"\\}",RCURL},
-        {"func",FUNC},
         {"return",RETURN},
         {"\".*\"",STRING},
         {"[a-zA-z_][a-zA-Z0-9_]*",VAR},

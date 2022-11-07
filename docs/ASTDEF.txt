@@ -13,7 +13,7 @@ declaringassignment = declaration EQUAL expr
 type 				= INTTYPE | DOUBLETYPE | STRINGTYPE
 loop 				= WHILE LBRACE expr RBRACE LCURL statements RCURL | FOR LBRACE declaringassignment SEMICOLON expr SEMICOLON expr RBRACE LCURL statements RCURL
 condition 			= IF LBRACE expr RBRACE LCURL statements RCURL
-function			= FUNC LBRACE declarations RBRACE LCURL statements RCURL
+function			= VAR LBRACE declarations RBRACE LCURL statements RCURL | VAR LBRACE RBRACE
 functioncall		= VAR LBRACE parameters RBRACE | VAR LBRACE RBRACE
 endfunction         = RETURN expr
 
