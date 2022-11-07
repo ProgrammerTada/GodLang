@@ -58,7 +58,10 @@ void Interpreter::execute(std::string filePath)
         case DIV:
             div();
             break;
-//-----------------------------------------------------------Flag
+//-----------------------------------------------------------Misc
+        case PC:
+            pc_(pc);
+            break;
         case FLAG:
             flag(std::stoul(args[1]), pc);
             break;
@@ -171,6 +174,10 @@ void Interpreter::div()
     double lh, rh;
     retriveOperants(lh, rh);
     stack.push_back(lh / rh);
+}
+
+void Interpreter::pc_(unsigned long &pc) {
+    pc = stack.back();
 }
 
 void Interpreter::flag(unsigned long adr, unsigned long pc)

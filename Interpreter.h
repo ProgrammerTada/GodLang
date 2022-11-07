@@ -26,6 +26,7 @@ private:
     void mul();
     void div();
 
+    void pc_(unsigned long &pc);
     void flag(unsigned long adr, unsigned long pc);
 
     void jump(long amount, unsigned long &pc);
@@ -54,7 +55,7 @@ private:
     enum OpCode {
         PUSH, POP, CREATE, LOAD, ERASE, ASS,
         ADD, SUB, MUL, DIV,
-        FLAG,
+        PC, FLAG,
         JUMP, JL, JLE, JG, JGE, JE, JNE,
         JUMPF, JLF, JLEF, JGF, JGEF, JEF, JNEF,
         POST, POSTC
@@ -63,7 +64,7 @@ private:
     std::map<std::string, OpCode> opMap 
         {{"push",PUSH},{"pop",POP},{"create",CREATE},{"load",LOAD},{"erase",ERASE},{"ass",ASS},
         {"add",ADD},{"sub",SUB},{"mul",MUL},{"div",DIV},
-        {"flag",FLAG},
+        {"pc",PC},{"flag",FLAG},
         {"jump",JUMP},{"jl",JL},{"jle",JLE},{"jg",JG},{"jge",JGE},{"je",JE},{"jne",JNE},
         {"jumpf",JUMPF},{"jlf",JLF},{"jlef",JLEF},{"jgf",JGF},{"jgef",JGEF},{"jef",JEF},{"jnef",JNEF},
         {"post",POST},{"postc",POSTC}};

@@ -24,6 +24,9 @@ ass x
 	div - division
 }
 
+-sets pc to value of top of stack
+pc
+
 -creates a flag with id x
 flag x
 
