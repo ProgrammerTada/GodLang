@@ -51,10 +51,28 @@ public:
     Lexer (std::string filePath);
     Token next();
 private:
-    std::vector<std::string> vectorize(std::string data);
-    void tokenize(std::vector<std::string> data);
+    /// @brief Recursevly scan the given data for tokens and appending them to the list of tokens in order
+    /// @param data the string thats to be lexed
+    /// @param tokens the list of tokens which are contained in the data
+    void recLexing(std::string data, std::vector<Token> &tokens);
+    
+    /// @brief This will do a "hard match" (^regex$) for all possible tokens and fill out the given token accordingly
+    /// @param e the string which could contain a token
+    /// @param t the return value of the assitioated token
+    /// @return returns if there was a match e.g. the token will have content
+    bool hardMatch(std::string e, Token &t);
+
+    /// @brief This will replace all chars from the data wich are defined in the search by the replacement char
+    ///         with the exception of areas in between two chars defined by the exceptions
+    /// @param data the string that needs cleaning
+    /// @param search collection of elements that should be replaced
+    /// @param replacement the replacement for search
+    /// @param exceptions collection of chars in between there should be no replacement
+    /// @return returns the cleaned string
+    std::string cleanData (std::string data, std::string search, char replacement, std::string exceptions);
     std::vector<Token> tokens;
     unsigned long tokenCounter = 0;
+    const std::string replacementChar = "\a";
     const std::vector<TokenMatch> tokenMatch{
         {";",SEMICOLON},
         {"^\\d+$",INTEGER},
