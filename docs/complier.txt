@@ -1,0 +1,55 @@
+expr 				= number | STRING | VAR | LBRACE expr RBRACE | expr op expr | assignment | declaration | declaringassignment | loop | condition | function | functioncall | endfunction
+number 				= INTEGER | DOUBLE
+op 					= DEQUAL | NEQUAL | LESS | LESSEQUAL | GREATER | GREATEREQUAL | PULS | MINUS | MUL | DIV | AND | OR
+assignment 			= expr EQUAL expr
+declarations		= declaration | declarations declaration
+declaration 		= type VAR
+parameters          = parameter | parameters parameter
+parameter           = expr
+declaringassignment = declaration EQUAL expr
+type 				= INTTYPE | DOUBLETYPE | STRINGTYPE
+loop 				= WHILE LBRACE expr RBRACE LCURL statements RCURL | FOR LBRACE declaringassignment SEMICOLON expr SEMICOLON expr RBRACE LCURL statements RCURL
+condition 			= IF LBRACE expr RBRACE LCURL statements RCURL
+function			= VAR LBRACE declarations RBRACE LCURL statements RCURL | VAR LBRACE RBRACE
+functioncall		= VAR LBRACE parameters RBRACE | VAR LBRACE RBRACE
+endfunction         = RETURN expr
+
+expr_function:
+    push 0  #to differ between function call and declaration
+    flag $funcflagid  #entry point for functioncall
+    je $endoffunc 0  #if we are just declaring we jump over content
+    pop  #delete 1 from functinocall that was to differentiate
+    create $retadr  #save return point
+    ass $retadr
+    pop
+    $parameteramount[  #save parameters top = most right
+        create $paramadr
+        ass $paramadr
+        pop
+    ]
+    >statements
+    $scopevaramount[  #delete all variables created in this scope. this is $cleanup+1
+        erase $scopevaradr
+    ]
+    $parameteramount[
+        erase $paramadr
+    ]
+    load $retadr  #go to return point
+    pc  #this is $endoffunc
+    jne 1 0  #cleanup 0 from declaration
+    pop
+
+expr_functioncall:
+    $parameteramount[  #push parameters left first
+        push $paramval
+    ]
+    push $pc  #push return point (this line + 5 aka the pop)
+    push 5
+    add
+    push 1  #push 1 to tell function that this is a call
+    jumpf $funcflagid
+    pop  #pop return point left over from function so that top of stack is the return value
+
+expr_endfunction:
+    >expr  #evaluate expression, top of stack will be return value
+    jump $cleanup  #go to the function cleanup
