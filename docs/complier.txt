@@ -14,10 +14,27 @@ function			= VAR LBRACE declarations RBRACE LCURL statements RCURL | VAR LBRACE 
 functioncall		= VAR LBRACE parameters RBRACE | VAR LBRACE RBRACE
 endfunction         = RETURN expr
 
+expr_condition_$conditiontype:  #$conditiontype is used to avoid redundency (no flag jumps though)
+    >expr  #evaluate right expr
+    >expr  #evaluate left expr
+    $conditiontype $endofelse
+    >statements  #else block
+    $scopevaramount[  #delete all variables created in this scope
+        erase $scopevaradr
+    ]
+    jump $endofif  #this is $endofelse
+    >statements  #if block
+    $scopevaramount[  #delete all variables created in this scope
+        erase $scopevaradr
+    ]  #this is $endofif
+
+
 expr_function:
     push 0  #to differ between function call and declaration
     flag $funcflagid  #entry point for functioncall
-    je $endoffunc 0  #if we are just declaring we jump over content
+    push 0  #0 for comparing
+    je $endoffunc  #if we are just declaring we jump over content
+    pop  #delete 0 from comparison
     pop  #delete 1 from functinocall that was to differentiate
     create $retadr  #save return point
     ass $retadr
@@ -36,7 +53,9 @@ expr_function:
     ]
     load $retadr  #go to return point
     goto  #this is $endoffunc
+    push 0  #0 for comparing
     jne 1 0  #cleanup 0 from declaration
+    pop
     pop
 
 expr_functioncall:
