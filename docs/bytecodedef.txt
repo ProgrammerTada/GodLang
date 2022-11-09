@@ -25,7 +25,7 @@ ass x
 }
 
 -sets pc to value of top of stack
-pc
+goto
 
 -creates a flag with id x
 flag x

@@ -60,7 +60,7 @@ void Interpreter::execute(std::string filePath)
             break;
 //-----------------------------------------------------------Misc
         case PC:
-            pc_(pc);
+            go_to(pc);
             break;
         case FLAG:
             flag(std::stoul(args[1]), pc);
@@ -176,7 +176,7 @@ void Interpreter::div()
     stack.push_back(lh / rh);
 }
 
-void Interpreter::pc_(unsigned long &pc) {
+void Interpreter::go_to(unsigned long &pc) {
     pc = stack.back();
 }
 

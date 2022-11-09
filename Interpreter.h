@@ -26,7 +26,7 @@ private:
     void mul();
     void div();
 
-    void pc_(unsigned long &pc);
+    void go_to(unsigned long &pc);
     void flag(unsigned long adr, unsigned long pc);
 
     void jump(long amount, unsigned long &pc);
