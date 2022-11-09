@@ -67,41 +67,41 @@ void Interpreter::execute(std::string filePath)
             break;
 //-----------------------------------------------------------Jumps
         case JL:
-            jl(std::stol(args[1]), stod(args[2]), pc);
+            jl(std::stol(args[1]), pc);
             break;
         case JLE:
-            jle(std::stol(args[1]), stod(args[2]), pc);
+            jle(std::stol(args[1]), pc);
             break;
         case JG:
-            jg(std::stol(args[1]), stod(args[2]), pc);
+            jg(std::stol(args[1]), pc);
             break;
         case JGE:
-            jge(std::stol(args[1]), stod(args[2]), pc);
+            jge(std::stol(args[1]), pc);
             break;
         case JE:
-            je(std::stol(args[1]), stod(args[2]), pc);
+            je(std::stol(args[1]), pc);
             break;
         case JNE:
-            jne(std::stol(args[1]), stod(args[2]), pc);
+            jne(std::stol(args[1]), pc);
             break;
         case JLF:
-            jlf(std::stol(args[1]), stod(args[2]), pc);
+            jlf(std::stol(args[1]), pc);
             break;
 //-----------------------------------------------------------Flagjumps
         case JLEF:
-            jlef(std::stoul(args[1]), stod(args[2]), pc);
+            jlef(std::stoul(args[1]), pc);
             break;
         case JGF:
-            jgf(std::stoul(args[1]), stod(args[2]), pc);
+            jgf(std::stoul(args[1]), pc);
             break;
         case JGEF:
-            jgef(std::stoul(args[1]), stod(args[2]), pc);
+            jgef(std::stoul(args[1]), pc);
             break;
         case JEF:
-            jef(std::stoul(args[1]), stod(args[2]), pc);
+            jef(std::stoul(args[1]), pc);
             break;
         case JNEF:
-            jnef(std::stoul(args[1]), stod(args[2]), pc);
+            jnef(std::stoul(args[1]), pc);
             break;
 //-----------------------------------------------------------Output
         case POST:
@@ -188,57 +188,57 @@ void Interpreter::flag(unsigned long adr, unsigned long pc)
 void Interpreter::jump(long amount, unsigned long &pc) {
     pc += amount;
 }
-void Interpreter::jl(long amount, double cmp, unsigned long &pc)
+void Interpreter::jl(long amount, unsigned long &pc)
 {
-    pc = stack.back() < cmp ? pc + amount : pc;
+    pc = stack.back() < stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::jle(long amount, double cmp, unsigned long &pc)
+void Interpreter::jle(long amount, unsigned long &pc)
 {
-    pc = stack.back() <= cmp ? pc + amount : pc;
+    pc = stack.back() <= stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::jg(long amount, double cmp, unsigned long &pc)
+void Interpreter::jg(long amount, unsigned long &pc)
 {
-    pc = stack.back() > cmp ? pc + amount : pc;
+    pc = stack.back() > stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::jge(long amount, double cmp, unsigned long &pc)
+void Interpreter::jge(long amount, unsigned long &pc)
 {
-    pc = stack.back() >= cmp ? pc + amount : pc;
+    pc = stack.back() >= stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::je(long amount, double cmp, unsigned long &pc)
+void Interpreter::je(long amount, unsigned long &pc)
 {
-    pc = cmp == stack.back() ? pc + amount : pc;
+    pc = stack.end()[-2] == stack.back() ? pc + amount : pc;
 }
-void Interpreter::jne(long amount, double cmp, unsigned long &pc)
+void Interpreter::jne(long amount, unsigned long &pc)
 {
-    pc = cmp != stack.back() ? pc + amount : pc;
+    pc = stack.end()[-2] != stack.back() ? pc + amount : pc;
 }
 
 void Interpreter::jumpf(unsigned long flagAdr, unsigned long &pc){
     pc = flags[flagAdr];
 }
-void Interpreter::jlf(unsigned long flagAdr, double cmp, unsigned long &pc)
+void Interpreter::jlf(unsigned long flagAdr, unsigned long &pc)
 {
-    pc = stack.back() < cmp ? flags[flagAdr] : pc;
+    pc = stack.back() < stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jlef(unsigned long flagAdr, double cmp, unsigned long &pc)
+void Interpreter::jlef(unsigned long flagAdr, unsigned long &pc)
 {
-    pc = stack.back() <= cmp ? flags[flagAdr] : pc;
+    pc = stack.back() <= stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jgf(unsigned long flagAdr, double cmp, unsigned long &pc)
+void Interpreter::jgf(unsigned long flagAdr, unsigned long &pc)
 {
-    pc = stack.back() > cmp ? flags[flagAdr] : pc;
+    pc = stack.back() > stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jgef(unsigned long flagAdr, double cmp, unsigned long &pc)
+void Interpreter::jgef(unsigned long flagAdr, unsigned long &pc)
 {
-    pc = stack.back() >= cmp ? flags[flagAdr] : pc;
+    pc = stack.back() >= stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jef(unsigned long flagAdr, double cmp, unsigned long &pc)
+void Interpreter::jef(unsigned long flagAdr, unsigned long &pc)
 {
-    pc = cmp == stack.back() ? flags[flagAdr] : pc;
+    pc = stack.end()[-2] == stack.back() ? flags[flagAdr] : pc;
 }
-void Interpreter::jnef(unsigned long flagAdr, double cmp, unsigned long &pc)
+void Interpreter::jnef(unsigned long flagAdr, unsigned long &pc)
 {
-    pc = cmp != stack.back() ? flags[flagAdr] : pc;
+    pc = stack.end()[-2] != stack.back() ? flags[flagAdr] : pc;
 }
 
 void Interpreter::post()

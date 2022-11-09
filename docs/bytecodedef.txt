@@ -33,27 +33,27 @@ flag x
 -unconditional jump by x steps (pc + x)
 jump x
 
--conditional jump by x steps (pc + x) if condition y is met compared to top of stack
+-conditional jump by x steps (pc + x) if condition is met comparing tos [con] tos-1
 {
-	jl x y - less
-	jle x y - less or equal
-	jg x y - greater
-	jge x y - greater or equal
-	je x y - equal
-	jne x y - not equal
+	jl x - less
+	jle x - less or equal
+	jg x - greater
+	jge x - greater or equal
+	je x - equal
+	jne x - not equal
 }
 
 -unconditional jump to flag with id x
 jumpf x
 
--conditional jump to flag id x if condition y is met compared to top of stack
+-conditional jump to flag id x if condition is met comparing tos [con] tos-1
 {
-	jlf x y - less
-	jlef x y - less or equal
-	jgf x y - greater
-	jgef x y - greater or equal
-	jef x y - equal
-	jnef x y - not equal
+	jlf x - less
+	jlef x - less or equal
+	jgf x - greater
+	jgef x - greater or equal
+	jef x - equal
+	jnef x - not equal
 }
 
 -prints the value of top of stack
