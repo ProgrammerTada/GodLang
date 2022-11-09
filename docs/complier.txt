@@ -35,7 +35,7 @@ expr_function:
         erase $paramadr
     ]
     load $retadr  #go to return point
-    pc  #this is $endoffunc
+    goto  #this is $endoffunc
     jne 1 0  #cleanup 0 from declaration
     pop
 
