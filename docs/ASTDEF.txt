@@ -1,7 +1,8 @@
 main 				= statements
+block         = LCURL statements RCURL
 statements 			= statement | statements statement
-statement 			= expr SEMICOLON
-expr 				= number | STRING | VAR | LBRACE expr RBRACE | expr op expr | assignment | declaration | declaringassignment | loop | condition | function | functioncall | endfunction
+statement 			= expr SEMICOLON | block | condition | function | loop
+expr 				= number | STRING | VAR | LBRACE expr RBRACE | expr op expr | assignment | declaration | declaringassignment | functioncall | endfunction
 number 				= INTEGER | DOUBLE
 op 					= DEQUAL | NEQUAL | LESS | LESSEQUAL | GREATER | GREATEREQUAL | PULS | MINUS | MUL | DIV | AND | OR
 assignment 			= expr EQUAL expr
@@ -11,9 +12,10 @@ parameters          = parameter | parameters parameter
 parameter           = expr
 declaringassignment = declaration EQUAL expr
 type 				= INTTYPE | DOUBLETYPE | STRINGTYPE
-loop 				= WHILE LBRACE expr RBRACE LCURL statements RCURL | FOR LBRACE declaringassignment SEMICOLON expr SEMICOLON expr RBRACE LCURL statements RCURL
-condition 			= IF LBRACE expr RBRACE LCURL statements RCURL
-function			= VAR LBRACE declarations RBRACE LCURL statements RCURL | VAR LBRACE RBRACE
+loop 				= WHILE LBRACE expr RBRACE block | FOR LBRACE declaringassignment SEMICOLON expr SEMICOLON expr RBRACE block
+condition 			= IF LBRACE expr RBRACE block
+otherwise     = ELSE block | ELSE IF
+function			= VAR LBRACE declarations RBRACE block | VAR LBRACE RBRACE block
 functioncall		= VAR LBRACE parameters RBRACE | VAR LBRACE RBRACE
 endfunction         = RETURN expr
 
@@ -41,6 +43,8 @@ DOUBLETYPE
 STRINGTYPE
 WHILE
 FOR
+IF
+ELSE
 LBRACE
 RBRACE
 LCURL
