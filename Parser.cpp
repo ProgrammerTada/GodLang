@@ -34,13 +34,42 @@ void Parser::statement(std::shared_ptr<Node> n)
         lex.at(tc + 1).tokenType == TokenType::STRINGTYPE ||
         lex.at(tc + 1).tokenType == TokenType::DOUBLETYPE)
     {
-        
+        declaration(res);
+    }
+    else if (lex.at(tc + 1).tokenType == TokenType::VAR)
+    {
+        assignment(res);
     }
     else
     {
         expression(res);
     }
     ++tc; // consume semicolon
+}
+
+void Parser::declaration(std::shared_ptr<Node> n){
+    std::shared_ptr<Declaration> res;
+    res = n->push<Declaration>();
+    ++tc;  // consume vartype
+    res->varType = lex.at(tc).tokenType;
+    res->varName = lex.at(tc + 1).value;
+    if (lex.at(tc + 2).tokenType == TokenType::EQUAL) {
+        assignment(res);
+    }
+    else {
+        ++tc;  // consume var    
+    }
+}
+void Parser::assignment(std::shared_ptr<Node> n){
+    std::shared_ptr<Assignment> res;
+    res = n->push<Assignment>();
+    ++tc;  // consume var
+    res->varName = lex.at(tc).value;
+    ++tc;  // consume equal
+    if (lex.at(tc + 1).tokenType == TokenType::STRING)
+        string(res);
+    else
+        expression(res);
 }
 
 void Parser::expression(std::shared_ptr<Node> n)

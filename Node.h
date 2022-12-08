@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include "./Lexer.h"
 
 #define stringify(name) #name
 
@@ -45,6 +46,7 @@ public:
     }
 };
 class Statement : public Node {
+public:
     void debug() override
     {
         for (std::shared_ptr<Node> n : subNodes)
@@ -53,6 +55,31 @@ class Statement : public Node {
             std::cout << std::endl;
         }
     }
+};
+class Declaration : public Node {
+public:
+    void debug() override
+    {
+        std::cout << "Vartype: " << varType << " " << varName << " ";
+        if (subNodes.size() > 0) {
+            subNodes.at(0)->debug();
+        }
+    }
+    TokenType varType;
+    std::string varName;
+};
+class Assignment : public Node {
+public:
+    void debug() override
+    {
+        std::cout << "Assignment: " << varName << " = ";
+        for (std::shared_ptr<Node> n : subNodes)
+        {
+            n->debug();
+            std::cout << std::endl;
+        }
+    }
+    std::string varName;
 };
 class Expression : public Node
 {

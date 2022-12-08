@@ -31,8 +31,7 @@ endfunction         = RETURN expr
     block = LCURL (statement)* RCURL
     statement = (expression | declaration | assignment) SEMICOLON
     declaration = vartype VAR
-    declaringassignment = declaration EQUAL expression
-    assignment = expression EQUAL expression
+    assignment = (declartion | VAR) EQUAL (expression | STRING)
     expression = bool_op1
     //logic
         bool_op1 = (bool_op2 bool_1 bool_op2 | bool_op2)*

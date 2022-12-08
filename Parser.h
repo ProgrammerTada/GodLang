@@ -15,6 +15,8 @@ private:
     // the value last consumed by the caller
     void block(std::shared_ptr<Node> n);
     void statement(std::shared_ptr<Node> n);
+    void declaration(std::shared_ptr<Node> n);
+    void assignment(std::shared_ptr<Node> n);
     void expression(std::shared_ptr<Node> n);
     void boolop1(std::shared_ptr<Node> n);
     void boolop2(std::shared_ptr<Node> n);
@@ -24,6 +26,7 @@ private:
     void atom(std::shared_ptr<Node> n);
     void number(std::shared_ptr<Node> n);
     void var(std::shared_ptr<Node> n);
+    void string(std::shared_ptr<Node> n);
     Lexer& lex;
     int tc = -1;
 };
