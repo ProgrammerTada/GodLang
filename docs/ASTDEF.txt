@@ -1,5 +1,5 @@
 main 				= statements
-block         = LCURL statements RCURL
+block               = LCURL statements RCURL
 statements 			= statement | statements statement
 statement 			= expr SEMICOLON | block | condition | function | loop
 expr 				= number | STRING | VAR | LBRACE expr RBRACE | expr op expr | assignment | declaration | declaringassignment | functioncall | endfunction
@@ -14,10 +14,34 @@ declaringassignment = declaration EQUAL expr
 type 				= INTTYPE | DOUBLETYPE | STRINGTYPE
 loop 				= WHILE LBRACE expr RBRACE block | FOR LBRACE declaringassignment SEMICOLON expr SEMICOLON expr RBRACE block
 condition 			= IF LBRACE expr RBRACE block
-otherwise     = ELSE block | ELSE IF
+otherwise           = ELSE block | ELSE IF
 function			= VAR LBRACE declarations RBRACE block | VAR LBRACE RBRACE block
 functioncall		= VAR LBRACE parameters RBRACE | VAR LBRACE RBRACE
 endfunction         = RETURN expr
+
+// Without leftrecursion:
+//base types (type_precedenc)
+    mop_1 = PLUS | MINUS
+    mop_2 = MUL | DIV
+    eqop_1 = DEQUAL | NEQUAL | LESS | LESSEQUAL | GREATER | GREATEREQUAL
+    bool_1 = OR
+    bool_2 = AND
+    vartype = INTTYPE | STRINGTYPE | DOUBLETYPE
+//compound types
+    block = LCURL (statement)* RCURL
+    statement = (expression | declaration | assignment) SEMICOLON
+    declaration = vartype VAR
+    declaringassignment = declaration EQUAL expression
+    assignment = expression EQUAL expression
+    expression = bool_op1
+    //logic
+        bool_op1 = (bool_op2 bool_1 bool_op2 | bool_op2)*
+        bool_op2 = (eq_op bool_2 eq_op | eq_op)*
+        eq_op = (bin_op_1 eqop_1 bin_op_1 | bin_op_1)*
+    //math
+        bin_op_1 = (bin_op_2 mop_1 bin_op_2 | bin_op_2)*
+        bin_op_2 = (atom mop_2 atom | atom)*
+    atom = VAR | number | LBRACE expression RBRACE
 
 All Tokens:
 SEMICOLON

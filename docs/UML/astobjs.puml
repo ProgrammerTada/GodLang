@@ -1,0 +1,13 @@
+@startuml AstObjs
+abstract class Node {
+    #Children : vector<Node>
+    #void compile
+}
+class Block {
+    statements : vector<Statements>
+}
+class Statement
+
+Node <|- Statement
+Node <|- Block
+@enduml

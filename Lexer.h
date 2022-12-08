@@ -10,13 +10,16 @@ enum TokenType {
     VAR,
     DOUBLE,
     INTEGER,
+    // if anything between this
     DEQUAL,
     NEQUAL,
     LESS,
     LESSEQUAL,
     GREATER,
     GREATEREQUAL,
-    PULS,
+    // and this is added the parser will break it doesnt matter where they are
+    // but they have to be together
+    PLUS,
     MINUS,
     MUL,
     DIV,
@@ -28,6 +31,8 @@ enum TokenType {
     STRINGTYPE,
     WHILE,
     FOR,
+    IF,
+    ELSE,
     LBRACE,
     RBRACE,
     LCURL,
@@ -48,7 +53,8 @@ struct Token {
 class Lexer {
 public:
     Lexer (std::string filePath);
-    Token next();
+    Token at(int pos) const;
+    int size() const {return tokens.size();}
 private:
     /// @brief Recursevly scan the given data for tokens and appending them to the list of tokens in order
     /// @param data the string thats to be lexed
@@ -70,7 +76,6 @@ private:
     /// @return returns the cleaned string
     std::string cleanData (std::string data, std::string search, char replacement, std::string exceptions);
     std::vector<Token> tokens;
-    unsigned long tokenCounter = 0;
     const std::string replacementChar = "\a";
     const std::vector<TokenMatch> tokenMatch{
         {";",SEMICOLON},
@@ -81,7 +86,7 @@ private:
         {"<=",LESSEQUAL},
         {">",GREATER},
         {">=",GREATEREQUAL},
-        {"\\+",PULS},
+        {"\\+",PLUS},
         {"-",MINUS},
         {"\\*",MUL},
         {"/",DIV},
@@ -93,6 +98,8 @@ private:
         {"string",STRINGTYPE},
         {"while",WHILE},
         {"for",FOR},
+        {"if", IF},
+        {"else", ELSE},
         {"\\(",LBRACE},
         {"\\)",RBRACE},
         {"\\{",LCURL},

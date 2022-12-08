@@ -18,14 +18,11 @@ Lexer::Lexer(std::string filePath)
     {
         text += temp;
     }
-    std::vector<Token> tokens;
     recLexing(cleanData(text, " \n", replacementChar[0], "\""), tokens);
 }
 
-Token Lexer::next() {
-    Token ret = tokens[tokenCounter];
-    ++tokenCounter;
-    return ret;
+Token Lexer::at(int pos) const {
+    return tokens.at(pos);
 }
 
 void Lexer::recLexing(std::string data, std::vector<Token> &tokens) {

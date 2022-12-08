@@ -1,4 +1,4 @@
-CXX = g++ -std=c++17 -O3 -Wall -Wextra -pedantic
+CXX = g++ -std=c++17 -Wall -Wextra -pedantic
 MAIN_BINARIES = $(basename $(wildcard *Main.cpp))
 TEST_BINARIES = $(basename $(wildcard *Test.cpp))
 HEADERS = $(wildcard *.h)
