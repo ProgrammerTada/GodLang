@@ -2,7 +2,7 @@
 #include <fstream>
 #include <regex>
 #include <boost/algorithm/string.hpp>
-#include "./Lexer.h"
+#include "lexer.h"
 
 Lexer::Lexer(std::string filePath)
 {

@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <memory>
-#include "./Lexer.h"
-#include "./Node.h"
+#include "lexer.h"
+#include "node.h"
 
 class Parser {
 public:

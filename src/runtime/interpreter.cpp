@@ -2,7 +2,7 @@
 #include <fstream>
 #include <boost/algorithm/string.hpp>
 
-#include "./Interpreter.h"
+#include "interpreter.h"
 
 void Interpreter::execute(std::string filePath)
 {

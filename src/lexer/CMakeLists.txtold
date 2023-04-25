@@ -1,0 +1,11 @@
+set(module_name _)
+
+set(headerfiles
+    lexer.h
+)
+
+set(sourcefiles
+    lexer.cpp
+)
+
+add_library(${module_name} ${headerfiles} ${sourcefiles})
