@@ -2,9 +2,9 @@
 #include <fstream>
 #include <boost/algorithm/string.hpp>
 
-#include "interpreter.h"
+#include "irmruntime.h"
 
-void Interpreter::execute(std::string filePath)
+void IRMRuntime::execute(std::string filePath)
 {
     std::fstream file;
     file.open(filePath, std::ios::in);
@@ -118,32 +118,32 @@ void Interpreter::execute(std::string filePath)
     }
 }
 
-void Interpreter::push(double val)
+void IRMRuntime::push(double val)
 {
     stack.push_back(val);
 }
-void Interpreter::pop()
+void IRMRuntime::pop()
 {
     stack.pop_back();
 }
-void Interpreter::create(unsigned long adr)
+void IRMRuntime::create(unsigned long adr)
 {
     heap[adr] = 0;
 }
-void Interpreter::load(unsigned long adr)
+void IRMRuntime::load(unsigned long adr)
 {
     stack.push_back(heap[adr]);
 }
-void Interpreter::erase(unsigned long adr)
+void IRMRuntime::erase(unsigned long adr)
 {
     heap.erase(adr);
 }
-void Interpreter::ass(unsigned long adr)
+void IRMRuntime::ass(unsigned long adr)
 {
     heap[adr] = stack.back();
 }
 
-void Interpreter::retriveOperants(double &lh, double &rh)
+void IRMRuntime::retriveOperants(double &lh, double &rh)
 {
     rh = stack.back();
     stack.pop_back();
@@ -151,101 +151,101 @@ void Interpreter::retriveOperants(double &lh, double &rh)
     stack.pop_back();
 }
 
-void Interpreter::add()
+void IRMRuntime::add()
 {
     double lh, rh;
     retriveOperants(lh, rh);
     stack.push_back(lh + rh);
 }
-void Interpreter::sub()
+void IRMRuntime::sub()
 {
     double lh, rh;
     retriveOperants(lh, rh);
     stack.push_back(lh - rh);
 }
-void Interpreter::mul()
+void IRMRuntime::mul()
 {
     double lh, rh;
     retriveOperants(lh, rh);
     stack.push_back(lh * rh);
 }
-void Interpreter::div()
+void IRMRuntime::div()
 {
     double lh, rh;
     retriveOperants(lh, rh);
     stack.push_back(lh / rh);
 }
 
-void Interpreter::go_to(unsigned long &pc) {
+void IRMRuntime::go_to(unsigned long &pc) {
     pc = stack.back();
 }
 
-void Interpreter::flag(unsigned long adr, unsigned long pc)
+void IRMRuntime::flag(unsigned long adr, unsigned long pc)
 {
     flags[adr] = pc;
 }
 
-void Interpreter::jump(long amount, unsigned long &pc) {
+void IRMRuntime::jump(long amount, unsigned long &pc) {
     pc += amount;
 }
-void Interpreter::jl(long amount, unsigned long &pc)
+void IRMRuntime::jl(long amount, unsigned long &pc)
 {
     pc = stack.back() < stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::jle(long amount, unsigned long &pc)
+void IRMRuntime::jle(long amount, unsigned long &pc)
 {
     pc = stack.back() <= stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::jg(long amount, unsigned long &pc)
+void IRMRuntime::jg(long amount, unsigned long &pc)
 {
     pc = stack.back() > stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::jge(long amount, unsigned long &pc)
+void IRMRuntime::jge(long amount, unsigned long &pc)
 {
     pc = stack.back() >= stack.end()[-2] ? pc + amount : pc;
 }
-void Interpreter::je(long amount, unsigned long &pc)
+void IRMRuntime::je(long amount, unsigned long &pc)
 {
     pc = stack.end()[-2] == stack.back() ? pc + amount : pc;
 }
-void Interpreter::jne(long amount, unsigned long &pc)
+void IRMRuntime::jne(long amount, unsigned long &pc)
 {
     pc = stack.end()[-2] != stack.back() ? pc + amount : pc;
 }
 
-void Interpreter::jumpf(unsigned long flagAdr, unsigned long &pc){
+void IRMRuntime::jumpf(unsigned long flagAdr, unsigned long &pc){
     pc = flags[flagAdr];
 }
-void Interpreter::jlf(unsigned long flagAdr, unsigned long &pc)
+void IRMRuntime::jlf(unsigned long flagAdr, unsigned long &pc)
 {
     pc = stack.back() < stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jlef(unsigned long flagAdr, unsigned long &pc)
+void IRMRuntime::jlef(unsigned long flagAdr, unsigned long &pc)
 {
     pc = stack.back() <= stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jgf(unsigned long flagAdr, unsigned long &pc)
+void IRMRuntime::jgf(unsigned long flagAdr, unsigned long &pc)
 {
     pc = stack.back() > stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jgef(unsigned long flagAdr, unsigned long &pc)
+void IRMRuntime::jgef(unsigned long flagAdr, unsigned long &pc)
 {
     pc = stack.back() >= stack.end()[-2] ? flags[flagAdr] : pc;
 }
-void Interpreter::jef(unsigned long flagAdr, unsigned long &pc)
+void IRMRuntime::jef(unsigned long flagAdr, unsigned long &pc)
 {
     pc = stack.end()[-2] == stack.back() ? flags[flagAdr] : pc;
 }
-void Interpreter::jnef(unsigned long flagAdr, unsigned long &pc)
+void IRMRuntime::jnef(unsigned long flagAdr, unsigned long &pc)
 {
     pc = stack.end()[-2] != stack.back() ? flags[flagAdr] : pc;
 }
 
-void Interpreter::post()
+void IRMRuntime::post()
 {
     std::cout << stack.back();
 }
-void Interpreter::postc()
+void IRMRuntime::postc()
 {
     std::wcout << wchar_t(stack.back());
 }

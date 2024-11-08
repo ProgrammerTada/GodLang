@@ -1,11 +1,12 @@
-set(module_name _)
+set(module_name parser)
 
 set(headerfiles
-    lexer.h
+    node.h
+    parser.h
 )
 
 set(sourcefiles
-    lexer.cpp
+    parser.cpp
 )
 
 add_library(${module_name} ${headerfiles} ${sourcefiles})

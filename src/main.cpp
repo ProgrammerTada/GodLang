@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {  
-    //Interpreter i;
+    //IRMRuntime i;
     //i.execute(argv[1]);
     Lexer l(argv[1]);
     Parser p(l);

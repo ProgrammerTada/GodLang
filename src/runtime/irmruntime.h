@@ -1,5 +1,4 @@
-#ifndef INTERPRETER_H_
-#define INTERPRETER_H_
+#pragma once
 
 #include <vector>
 #include <map>
@@ -7,7 +6,7 @@
 #include <functional>
 
 
-class Interpreter {
+class IRMRuntime {
 public:
     void execute(std::string filePath);
 
