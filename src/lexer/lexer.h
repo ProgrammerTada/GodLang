@@ -1,5 +1,4 @@
-#ifndef LEXER_H_
-#define LEXER_H_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -110,4 +109,3 @@ private:
         {"[+-]?([0-9]*)[.][0-9]+",DOUBLE}
     };
 };
-#endif

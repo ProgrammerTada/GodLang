@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <memory>
-#include "lexer.h"
+#include "lexer/lexer.h"
 #include "node.h"
 
 class Parser {

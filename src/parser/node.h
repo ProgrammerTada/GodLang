@@ -1,11 +1,10 @@
-#ifndef NODE_H_
-#define NODE_H_
+#pragma once
 
 #include <vector>
 #include <iostream>
 #include <memory>
 #include <string>
-#include "./Lexer.h"
+#include "lexer/lexer.h"
 
 #define stringify(name) #name
 
@@ -200,5 +199,3 @@ public:
     }
     std::string name;
 };
-
-#endif
